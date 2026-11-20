@@ -1,0 +1,973 @@
+{
+  "pack": "energy-api-endpoints",
+  "title": "Energy API endpoints",
+  "snapshot": "2026-11-15",
+  "tested": {
+    "min": "2026-11-14",
+    "max": "2026-11-15",
+    "text": "14–15 Nov 2026"
+  },
+  "note": "On the date in last_tested (IST), one GET to the URL, sent with no key, returned HTTP 2xx and a non-empty data body. HTML pages and empty results did not pass. The format column records what came back. This is a test result for that date, not a promise that the URL answers today. Licences, terms, rate limits, accuracy and freshness were not reviewed. Endpoints are URLs, not separate APIs; many share one service.",
+  "licence": "CC BY 4.0: credit AgentPopulation and link https://agentpopulation.com",
+  "focus": "(title matches /energ|electric|elektri|électri|elettric|eléctric|\\bpower\\b|solar|photovolt|\\bpv\\b|wind ?(farm|turbine|park|power|energy|speed)|windkraft|windpark|éolien|eolic|renewab|hydropower|hydroelectr|nuclear|natural gas|\\bgas\\b|\\boil\\b|petrol|crude|fuel|coal|grid (area|capacity|mix|emission|components|supply|management|indicators|connect)|high-voltage grid|elia grid|belgian grid|electricity grid|power grid|smart grid|through the grid|substation|transmission|pipeline|biomass|biogas|bioenerg|geotherm|district heat|heat pump|heating|charger|charging|\\bev\\b|batter|kwh|mwh|\\bmw\\b|carbon intensity|imbalance|day-ahead|\\bstrom|kraftwerk|wärme|solaire|energia|lng|refiner|orphan well|oil and gas|gas wells?|oil wells?|ενέργ|ηλεκτρ|φωτοβολτ|αιολ|υδροηλεκτρ|φόρτισ/i OR subcategory matches /^(GB electricity market|Electricity generation mix|Day-ahead electricity price|Installed capacity|Grid carbon intensity|Renewable share forecast)/i) AND NOT title matches /energy intake|dietary|engine power|purchasing power|radioactivity measurements|olive oil|oil mills|oil seeds|rice oil|itinerant movements|gas phase pfas|geologic map of|eclipse|^area c\\b|\\baccessi\\b/i AND NOT title matches /^(areal extent|point data) \\(/i AND NOT url matches /request=getcapabilities/i AND NOT host is cruscotto-italia.dati.gov.it",
+  "buckets": [
+    {
+      "id": "agent",
+      "name": "Agent tools",
+      "title": "Grid, price, generation and carbon-intensity lookups an agent can call",
+      "filter": "tags has agent-ready AND (subcategory matches /^(GB electricity market|Electricity generation mix|Day-ahead electricity price|Installed capacity|Grid carbon intensity|Renewable share forecast)/i OR host in (api.energidataservice.dk, opendata.elia.be) OR (host is www.odwb.be AND subcategory matches /electricity/i))",
+      "endpoints": 418,
+      "notes": [],
+      "criteria": "Services in this pack with the most endpoints that match this bucket and are tagged agent-ready (no key sent in the test call, JSON body, passed a data call). Ties go to the service with more country codes, then by name. Only services with at least one bucket row that matches the focus rule are listed, and the sample comes from those rows; the counts cover the whole bucket. The sample URL is the first row by URL sort after preferring, in this order: rows that match the bucket's sample preference when it has one, rows that return values rather than describe a dataset or a service (not ERDDAP /info/ pages, OGC GetCapabilities requests, bare OWS addresses, PxWeb tables, UN SDG series lists, Statistics Canada download pointers, WorldPop listings, GTFS validation reports, untitled rows or service root addresses), and agent-ready rows. Sample preference in this bucket: url contains \"api.energy-charts.info/public_power?country=de\" OR title matches /generation|\\bload\\b|price|carbon intensity|consumption per grid area|system frequency/i. Services named \"ArcGIS organization\" hold map layers from many owners and are added only when fewer than 5 other services match.",
+      "services": [
+        {
+          "service": "Energy Charts",
+          "display": "Energy Charts",
+          "host": "api.energy-charts.info",
+          "endpoints_in_bucket": 124,
+          "endpoints_in_pack": 1029,
+          "country_codes": [
+            "AT",
+            "BA",
+            "BE",
+            "BG",
+            "CH",
+            "CZ",
+            "DE",
+            "DK",
+            "EE",
+            "ES",
+            "EU",
+            "FI",
+            "FR",
+            "GB",
+            "GR",
+            "HR",
+            "HU",
+            "IE",
+            "IT",
+            "LT",
+            "LV",
+            "ME",
+            "MK",
+            "NL",
+            "NO",
+            "PL",
+            "PT",
+            "RO",
+            "RS",
+            "SE",
+            "SI",
+            "SK",
+            "XK"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://api.energy-charts.info/price?bzn=AT",
+          "sample_title": "Energy-Charts day-ahead price: AT",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "Elia",
+          "display": "Elia",
+          "host": "opendata.elia.be",
+          "endpoints_in_bucket": 122,
+          "endpoints_in_pack": 213,
+          "country_codes": [
+            "BE"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods003/exports/jsonl",
+          "sample_title": "Load on the Elia grid",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "Elexon",
+          "display": "Elexon",
+          "host": "data.elexon.co.uk",
+          "endpoints_in_bucket": 99,
+          "endpoints_in_pack": 894,
+          "country_codes": [
+            "GB"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FOU2T14D",
+          "sample_title": "Elexon BMRS: 2 to 14 days ahead generation availability aggregated by fuel type (FOU2T14D)",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "Datavejviser - Guide to Public Data",
+          "display": "Datavejviser - Guide to Public Data",
+          "host": "api.energidataservice.dk",
+          "endpoints_in_bucket": 56,
+          "endpoints_in_pack": 95,
+          "country_codes": [
+            "DK"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 2,
+          "sample_url": "https://api.energidataservice.dk/dataset/ConsumptionGridAreaHour",
+          "sample_title": "Consumption per Grid Area",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "Carbonintensity",
+          "display": "Carbonintensity",
+          "host": "api.carbonintensity.org.uk",
+          "endpoints_in_bucket": 17,
+          "endpoints_in_pack": 997,
+          "country_codes": [
+            "GB"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://api.carbonintensity.org.uk/regional/regionid/1",
+          "sample_title": "UK carbon intensity region 1",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "app",
+      "name": "App features",
+      "title": "Power-plant, solar, wind, charging and fuel-station maps",
+      "filter": "subcategory matches /power plants|solar|wind|substations|transmission lines|pipelines|fuel stations|charging/i OR format is geojson",
+      "endpoints": 9067,
+      "notes": [
+        "6323 of these are map-layer queries that asked for a few records (resultRecordCount); raise it or page through for the whole layer."
+      ],
+      "criteria": "Services in this pack with the most endpoints that match this bucket and passed a data call. Ties go to the service with more country codes, then by name. Only services with at least one bucket row that matches the focus rule are listed, and the sample comes from those rows; the counts cover the whole bucket. The sample URL is the first row by URL sort after preferring, in this order: rows that match the bucket's sample preference when it has one, rows that return values rather than describe a dataset or a service (not ERDDAP /info/ pages, OGC GetCapabilities requests, bare OWS addresses, PxWeb tables, UN SDG series lists, Statistics Canada download pointers, WorldPop listings, GTFS validation reports, untitled rows or service root addresses), and agent-ready rows. Sample preference in this bucket: NOT url matches ///(services[0-9]*(-[a-z0-9]+)?|utility)\\.arcgis\\.com//i AND title matches /power plant|solar|wind|charg|fuel station|substation|transmission/i. Services named \"ArcGIS organization\" hold map layers from many owners and are added only when fewer than 5 other services match.",
+      "services": [
+        {
+          "service": "Sheffield",
+          "display": "Sheffield",
+          "host": "api.solar.sheffield.ac.uk",
+          "endpoints_in_bucket": 1000,
+          "endpoints_in_pack": 1000,
+          "country_codes": [
+            "GB"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://api.solar.sheffield.ac.uk/pvlive/api/v4/gsp_list",
+          "sample_title": "Sheffield Solar, University of Sheffield: PV_Live API v4",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Globalsolaratlas",
+          "display": "Globalsolaratlas",
+          "host": "api.globalsolaratlas.info",
+          "endpoints_in_bucket": 999,
+          "endpoints_in_pack": 999,
+          "country_codes": [
+            "AE",
+            "AF",
+            "AM",
+            "AO",
+            "AR",
+            "AT",
+            "AU",
+            "AZ",
+            "BA",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BI",
+            "BJ",
+            "BO",
+            "BR",
+            "BY",
+            "CA",
+            "CD",
+            "CF",
+            "CG",
+            "CI",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CU",
+            "CZ",
+            "DE",
+            "DJ",
+            "DK",
+            "DO",
+            "DZ",
+            "EC",
+            "EG",
+            "ER",
+            "ES",
+            "ET",
+            "FI",
+            "FR",
+            "GA",
+            "GB",
+            "GE",
+            "GH",
+            "GN",
+            "GR",
+            "GT",
+            "HK",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IQ",
+            "IR",
+            "IT",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KP",
+            "KR",
+            "KW",
+            "KZ",
+            "LA",
+            "LB",
+            "LK",
+            "LR",
+            "LT",
+            "LV",
+            "LY",
+            "MA",
+            "MD",
+            "MG",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MR",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NE",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NZ",
+            "OM",
+            "PE",
+            "PH",
+            "PK",
+            "PL",
+            "PY",
+            "RO",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SD",
+            "SE",
+            "SG",
+            "SL",
+            "SN",
+            "SO",
+            "SY",
+            "TD",
+            "TG",
+            "TH",
+            "TJ",
+            "TM",
+            "TN",
+            "TR",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "US",
+            "UY",
+            "UZ",
+            "VE",
+            "VN",
+            "XK",
+            "YE",
+            "ZA",
+            "ZM",
+            "ZW"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://api.globalsolaratlas.info/data/lta?loc=-0.0319,109.3250",
+          "sample_title": "Global Solar Atlas (World Bank / ESMAP, Solargis): Global Solar Atlas long-term average solar resource and PV output",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Farmingdale State College (ArcGIS Online)",
+          "display": "Farmingdale State College (ArcGIS Online)",
+          "host": "services7.arcgis.com",
+          "endpoints_in_bucket": 315,
+          "endpoints_in_pack": 322,
+          "country_codes": [
+            "US"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://services7.arcgis.com/6o0M9YyJcHjZF5MP/arcgis/rest/services/50_mile_Buffer_of_Nuclear_Power_Plants_in_the_U_S_/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&resultRecordCount=5&f=json",
+          "sample_title": "50 mile buffer of nuclear power plants in the U.S.",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "Sahkotin",
+          "display": "Sahkotin",
+          "host": "api.sahkotin.fi",
+          "endpoints_in_bucket": 106,
+          "endpoints_in_pack": 106,
+          "country_codes": [
+            "FI"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://api.sahkotin.fi/prices?start=2018-01-01T00:00:00Z&end=2018-02-01T00:00:00Z",
+          "sample_title": "Sähkötin: Finnish spot electricity price API",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Stanford University (ArcGIS Online)",
+          "display": "Stanford University (ArcGIS Online)",
+          "host": "services.arcgis.com",
+          "endpoints_in_bucket": 102,
+          "endpoints_in_pack": 127,
+          "country_codes": [
+            "US"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://services.arcgis.com/7CRlmWNEbeCqEJ6a/arcgis/rest/services/4_2_Solar_Resources_CEE276M_FM_WFL1/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&resultRecordCount=5&f=json",
+          "sample_title": "4_2 Solar Resources CEE276M FM_WFL1",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "Geospatial Analysis Lab (GsAL) at USF (ArcGIS Online)",
+          "display": "Geospatial Analysis Lab (GsAL) at USF (ArcGIS Online)",
+          "host": "services5.arcgis.com",
+          "endpoints_in_bucket": 85,
+          "endpoints_in_pack": 122,
+          "country_codes": [
+            "DE",
+            "SG",
+            "US"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://services5.arcgis.com/wXYNaciObHUosEnt/arcgis/rest/services/A04_Home_Heating_Fuel_by_County_Moore_WFL1/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&resultRecordCount=5&f=json",
+          "sample_title": "A04 Home Heating Fuel by County_Moore_WFL1",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "University of Tennessee (ArcGIS Online)",
+          "display": "University of Tennessee (ArcGIS Online)",
+          "host": "services1.arcgis.com",
+          "endpoints_in_bucket": 41,
+          "endpoints_in_pack": 56,
+          "country_codes": [
+            "US"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://services1.arcgis.com/HLC8bAygObK4fhPW/arcgis/rest/services/CNG_LPG_LNG/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&resultRecordCount=5&f=json",
+          "sample_title": "CNG LPG LNG",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "URSpatial (ArcGIS Online)",
+          "display": "URSpatial (ArcGIS Online)",
+          "host": "services.arcgis.com",
+          "endpoints_in_bucket": 39,
+          "endpoints_in_pack": 49,
+          "country_codes": [
+            "US"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://services.arcgis.com/o6oETlrWetREI1A2/arcgis/rest/services/BuildingsSolarDW/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&resultRecordCount=5&f=json",
+          "sample_title": "BuildingsSolarDW",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        }
+      ]
+    },
+    {
+      "id": "grounding",
+      "name": "Grounding and data pipelines",
+      "title": "Energy statistics, market series and country charts for scheduled loads",
+      "filter": "tags has statistics OR format in (csv, xml, zip, txt)",
+      "endpoints": 23852,
+      "notes": [],
+      "criteria": "Services in this pack with the most endpoints that match this bucket and passed a data call. Ties go to the service with more country codes, then by name. Only services with at least one bucket row that matches the focus rule are listed, and the sample comes from those rows; the counts cover the whole bucket. The sample URL is the first row by URL sort after preferring, in this order: rows that match the bucket's sample preference when it has one, rows that return values rather than describe a dataset or a service (not ERDDAP /info/ pages, OGC GetCapabilities requests, bare OWS addresses, PxWeb tables, UN SDG series lists, Statistics Canada download pointers, WorldPop listings, GTFS validation reports, untitled rows or service root addresses), and agent-ready rows. Sample preference in this bucket: NOT url matches ///(services[0-9]*(-[a-z0-9]+)?|utility)\\.arcgis\\.com//i AND title matches /electricity|energy balance|renewab|generation|natural gas|crude|petroleum|energy consumption/i. Services named \"ArcGIS organization\" hold map layers from many owners and are added only when fewer than 5 other services match.",
+      "services": [
+        {
+          "service": "Our World in Data",
+          "display": "Our World in Data",
+          "host": "ourworldindata.org",
+          "endpoints_in_bucket": 1168,
+          "endpoints_in_pack": 1168,
+          "country_codes": [
+            "AD",
+            "AF",
+            "AG",
+            "AI",
+            "AO",
+            "AQ",
+            "AS",
+            "AW",
+            "AX",
+            "AZ",
+            "BA",
+            "BB",
+            "BD",
+            "BF",
+            "BG",
+            "BI",
+            "BJ",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BQ",
+            "BS",
+            "BT",
+            "BV",
+            "BW",
+            "BY",
+            "BZ",
+            "CC",
+            "CD",
+            "CF",
+            "CG",
+            "CI",
+            "CK",
+            "CM",
+            "CR",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+            "CY",
+            "DJ",
+            "DM",
+            "DZ",
+            "EE",
+            "EG",
+            "EH",
+            "ER",
+            "ET",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "GA",
+            "GD",
+            "GE",
+            "GF",
+            "GG",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "HM",
+            "HN",
+            "HT",
+            "IM",
+            "IQ",
+            "IR",
+            "JE",
+            "JM",
+            "JO",
+            "KE",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KP",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MF",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MY",
+            "MZ",
+            "NA",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NP",
+            "NR",
+            "NU",
+            "OM",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PM",
+            "PN",
+            "PR",
+            "PS",
+            "PW",
+            "PY",
+            "QA",
+            "RE",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SB",
+            "SC",
+            "SD",
+            "SG",
+            "SH",
+            "SI",
+            "SJ",
+            "SL",
+            "SM",
+            "SO",
+            "SR",
+            "SS",
+            "ST",
+            "SV",
+            "SX",
+            "SY",
+            "SZ",
+            "TC",
+            "TD",
+            "TF",
+            "TJ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TT",
+            "TV",
+            "TZ",
+            "UG",
+            "UM",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VU",
+            "WF",
+            "WS",
+            "YE",
+            "YT",
+            "ZA",
+            "ZM",
+            "ZW"
+          ],
+          "formats": [
+            "csv"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://ourworldindata.org/grapher/electricity-generation.csv?v=1&csvType=filtered&useColumnShortNames=true&country=~ABW",
+          "sample_title": "Our World in Data: electricity generation - Aruba",
+          "sample_format": "csv",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "Spp",
+          "display": "Spp",
+          "host": "portal.spp.org",
+          "endpoints_in_bucket": 1000,
+          "endpoints_in_pack": 1000,
+          "country_codes": [
+            "US"
+          ],
+          "formats": [
+            "csv"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://portal.spp.org/file-browser-api/download/da-mcp?path=/2025/01/DA-MCP-202501010100.csv",
+          "sample_title": "Southwest Power Pool (SPP): SPP Portal public data file browser",
+          "sample_format": "csv",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Omie",
+          "display": "Omie",
+          "host": "www.omie.es",
+          "endpoints_in_bucket": 997,
+          "endpoints_in_pack": 997,
+          "country_codes": [
+            "ES"
+          ],
+          "formats": [
+            "csv"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://www.omie.es/es/file-download?parents%5B0%5D=marginalpdbc&filename=marginalpdbc_20230101.1",
+          "sample_title": "OMIE (Iberian electricity market operator): OMIE market result files",
+          "sample_format": "csv",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "www.emi.ea.govt.nz",
+          "display": "www.emi.ea.govt.nz",
+          "host": "www.emi.ea.govt.nz",
+          "endpoints_in_bucket": 990,
+          "endpoints_in_pack": 990,
+          "country_codes": [
+            "NZ"
+          ],
+          "formats": [
+            "csv"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://www.emi.ea.govt.nz/Environment/Datasets/HydrologicalModellingDataset/1_InfrastructureAndHydroConstraintAttributes/20241231_InfrastructureAndHydroConstraintAttributes.csv",
+          "sample_title": "Electricity Authority Te Mana Hiko (EMI): EMI wholesale and retail datasets",
+          "sample_format": "csv",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Aemo",
+          "display": "Aemo",
+          "host": "data.wa.aemo.com.au",
+          "endpoints_in_bucket": 989,
+          "endpoints_in_pack": 989,
+          "country_codes": [
+            "AU"
+          ],
+          "formats": [
+            "csv"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://data.wa.aemo.com.au/public/public-data/datafiles/commissioning-test/commissioning-test-summary-2014.csv",
+          "sample_title": "AEMO (Wholesale Electricity Market, WA): AEMO WA public data files",
+          "sample_format": "csv",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Aemo",
+          "display": "Aemo",
+          "host": "www.aemo.com.au",
+          "endpoints_in_bucket": 989,
+          "endpoints_in_pack": 989,
+          "country_codes": [
+            "AU"
+          ],
+          "formats": [
+            "csv"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://www.aemo.com.au/aemo/data/nem/priceanddemand/PRICE_AND_DEMAND_199812_NSW1.csv",
+          "sample_title": "AEMO (Australian Energy Market Operator): AEMO NEM aggregated price and demand data",
+          "sample_format": "csv",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Sem O",
+          "display": "Sem O",
+          "host": "reports.sem-o.com",
+          "endpoints_in_bucket": 982,
+          "endpoints_in_pack": 983,
+          "country_codes": [
+            "IE"
+          ],
+          "formats": [
+            "csv",
+            "xml",
+            "json"
+          ],
+          "formats_in_pack": 3,
+          "sample_url": "https://reports.sem-o.com/documents/IDC_Statistic_20191117103003.csv",
+          "sample_title": "SEMO (Single Electricity Market Operator, Ireland & Northern Ireland): SEMO market reports API",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Statistics Norway PxWeb",
+          "display": "Statistics Norway PxWeb",
+          "host": "data.ssb.no",
+          "endpoints_in_bucket": 929,
+          "endpoints_in_pack": 929,
+          "country_codes": [
+            "NO"
+          ],
+          "formats": [
+            "json"
+          ],
+          "formats_in_pack": 1,
+          "sample_url": "https://data.ssb.no/api/v0/en/table/al/al05/lonnansatt/SBMENU12027/SBMENU12048/BeregnKraft",
+          "sample_title": "Norway statistics: 05488: Estimated annual earnings for full-time employees in electricity supply (closed series) 1998 - 2008",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        }
+      ]
+    },
+    {
+      "id": "evals",
+      "name": "Evals and testing",
+      "title": "Grid data, map layers and statistics files to test an energy tool",
+      "filter": "the whole pack",
+      "endpoints": 72606,
+      "notes": [],
+      "criteria": "Services in this pack that returned the most different formats, then the most endpoints that passed a data call, then by name: a mix of response shapes to test parsers and tool calls. Only services with at least one bucket row that matches the focus rule are listed, and the sample comes from those rows; the counts cover the whole bucket. The sample URL is the first row by URL sort after preferring, in this order: rows that match the bucket's sample preference when it has one, rows that return values rather than describe a dataset or a service (not ERDDAP /info/ pages, OGC GetCapabilities requests, bare OWS addresses, PxWeb tables, UN SDG series lists, Statistics Canada download pointers, WorldPop listings, GTFS validation reports, untitled rows or service root addresses), and agent-ready rows. Sample preference in this bucket: NOT url matches ///(services[0-9]*(-[a-z0-9]+)?|utility)\\.arcgis\\.com//i. Services named \"ArcGIS organization\" hold map layers from many owners and are added only when fewer than 5 other services match.",
+      "services": [
+        {
+          "service": "Elia",
+          "display": "Elia",
+          "host": "opendata.elia.be",
+          "endpoints_in_bucket": 213,
+          "endpoints_in_pack": 213,
+          "country_codes": [
+            "BE"
+          ],
+          "formats": [
+            "json",
+            "csv",
+            "xml",
+            "txt",
+            "zip"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods003/exports/jsonl",
+          "sample_title": "Load on the Elia grid",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "ArcGIS Online: ACE Irreplaceability (Rank 4 & 5) - KML",
+          "display": "ArcGIS Online: ACE Irreplaceability (Rank 4 & 5) - KML",
+          "host": "cecgis-caenergy.opendata.arcgis.com",
+          "endpoints_in_bucket": 123,
+          "endpoints_in_pack": 123,
+          "country_codes": [
+            "US"
+          ],
+          "formats": [
+            "json",
+            "csv",
+            "zip",
+            "xml",
+            "geojson"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://cecgis-caenergy.opendata.arcgis.com/api/download/v1/items/07224640a2fe42f89399be796e7b8810/geojson?layers=0",
+          "sample_title": "Electric Load Serving Entities (Other) - GeoJSON",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "daten.stadt.sg.ch",
+          "display": "daten.stadt.sg.ch",
+          "host": "daten.stadt.sg.ch",
+          "endpoints_in_bucket": 50,
+          "endpoints_in_pack": 50,
+          "country_codes": [
+            "CH"
+          ],
+          "formats": [
+            "json",
+            "csv",
+            "xml",
+            "txt",
+            "geojson"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://daten.stadt.sg.ch/api/v2/catalog/datasets/aktuelle-stromproduktion-der-solaranlagen-der-stgaller-stadtwerke/exports/jsonld",
+          "sample_title": "Current electricity production of the solar systems of the St.Gallen municipal utilities (pilot project Kraftwerk St.Gallen)",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "Canadian Urban Data Catalogue (CUDC)",
+          "display": "Canadian Urban Data Catalogue (CUDC)",
+          "host": "geohub.saskatchewan.ca",
+          "endpoints_in_bucket": 36,
+          "endpoints_in_pack": 36,
+          "country_codes": [
+            "CA"
+          ],
+          "formats": [
+            "csv",
+            "geojson",
+            "xml",
+            "json",
+            "zip"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://geohub.saskatchewan.ca/api/download/v1/items/ae2640f3ecf64e69a317d25cece224d2/geojson?layers=4",
+          "sample_title": "Oil and Gas Pools - GeoJSON",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "ArcGIS Online: BLM AZ Administrative Unit Office Locations (Point)",
+          "display": "ArcGIS Online: BLM AZ Administrative Unit Office Locations (Point)",
+          "host": "gbp-blm-egis.hub.arcgis.com",
+          "endpoints_in_bucket": 26,
+          "endpoints_in_pack": 26,
+          "country_codes": [
+            "US"
+          ],
+          "formats": [
+            "json",
+            "csv",
+            "xml",
+            "zip",
+            "geojson"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://gbp-blm-egis.hub.arcgis.com/api/download/v1/items/02ec35c531df416e8722a377f09e862a/geojson?layers=0",
+          "sample_title": "BLM CO Oil and Gas Potential - GeoJSON",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "Puglia",
+          "display": "Puglia",
+          "host": "dati.puglia.it",
+          "endpoints_in_bucket": 25,
+          "endpoints_in_pack": 25,
+          "country_codes": [
+            "IT"
+          ],
+          "formats": [
+            "json",
+            "csv",
+            "xml",
+            "geojson",
+            "txt"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://dati.puglia.it/ckan/dataset/58f7f999-94d8-444f-bfa9-3a675d44c026/resource/199d2ab0-c2ef-4d92-b9bc-9d4804bfceda/download/fondo-efficientamento-energetico-2025-foglio1.csv",
+          "sample_title": "Energy Efficiency Fund",
+          "sample_format": "csv",
+          "sample_last_tested": "2026-11-14"
+        },
+        {
+          "service": "California Natural Resources Agency Open",
+          "display": "California Natural Resources Agency Open",
+          "host": "gis.data.cnra.ca.gov",
+          "endpoints_in_bucket": 22,
+          "endpoints_in_pack": 22,
+          "country_codes": [
+            "US"
+          ],
+          "formats": [
+            "csv",
+            "json",
+            "xml",
+            "zip",
+            "geojson"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://gis.data.cnra.ca.gov/api/download/v1/items/a1e2df6a8bdc4ed7bfdfb894c1a3f285/geojson?layers=0",
+          "sample_title": "Oil and Gas Field Administrative Boundaries - GeoJSON",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        },
+        {
+          "service": "ArcGIS Online: ACT Canopy Cover 2020 1m WESTON",
+          "display": "ArcGIS Online: ACT Canopy Cover 2020 1m WESTON",
+          "host": "actmapi-actgov.opendata.arcgis.com",
+          "endpoints_in_bucket": 11,
+          "endpoints_in_pack": 11,
+          "country_codes": [
+            "AU"
+          ],
+          "formats": [
+            "csv",
+            "zip",
+            "geojson",
+            "json",
+            "xml"
+          ],
+          "formats_in_pack": 5,
+          "sample_url": "https://actmapi-actgov.opendata.arcgis.com/api/download/v1/items/2f277dfd24964ef3943d99b34c38ebad/csv?layers=14",
+          "sample_title": "ACT Canopy Cover 2020 1m STROMLO - CSV",
+          "sample_format": "json",
+          "sample_last_tested": "2026-11-15"
+        }
+      ]
+    }
+  ]
+}
